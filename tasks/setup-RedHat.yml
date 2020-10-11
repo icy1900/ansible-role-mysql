@@ -5,3 +5,9 @@
     state: present
     enablerepo: "{{ mysql_enablerepo | default(omit, true) }}"
   register: rh_mysql_install_packages
+
+- name: ensure empty password for root at initialisation
+  replace:
+    path: /usr/bin/mysqld_pre_systemd
+    regexp: '--initialize'
+    replace: ' --initialize-insecure'
